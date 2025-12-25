@@ -1,45 +1,39 @@
  <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Secure Portal</title>
+    <title>Bluebook Social - Feed</title>
     <style>
-        /* ফেসবুকের মতো না করে একটু আলাদা স্টাইল দিন */
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f0f2f5; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-        .login-card { background: white; padding: 40px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); width: 100%; max-width: 400px; text-align: center; }
-        input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; }
-        .btn { width: 100%; padding: 12px; background-color: #42b72a; border: none; color: white; font-weight: bold; border-radius: 6px; cursor: pointer; }
-        .btn:hover { background-color: #36a420; }
-        h2 { color: #1c1e21; }
+        body { font-family: Arial; background: #e9ebee; margin: 0; }
+        .nav { background: #4267b2; color: white; padding: 10px; text-align: center; }
+        .container { width: 500px; margin: 20px auto; }
+        .post-box { background: white; padding: 15px; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        textarea { width: 100%; height: 60px; margin: 10px 0; border: 1px solid #ddd; }
+        .btn { background: #4267b2; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; }
+        .user-post { background: white; padding: 15px; border-radius: 8px; margin-top: 10px; border-bottom: 1px solid #ddd; }
+        .username { font-weight: bold; color: #365899; }
     </style>
 </head>
 <body>
-    <div class="login-card">
-        <h2>Welcome Back</h2>
-        <p>Please log in to your account</p>
-        <input type="email" id="email" placeholder="Email Address">
-        <input type="password" id="pass" placeholder="Password">
-        <button class="btn" id="login-submit">Login</button>
+    <div class="nav"><h1>Bluebook Social</h1></div>
+    
+    <div class="container">
+        <div class="post-box">
+            <form action="/post" method="POST">
+                <input type="text" name="username" placeholder="আপনার নাম" required style="width: 100%; margin-bottom: 10px;">
+                <textarea name="content" placeholder="আপনার মনে কি আছে?" required></textarea>
+                <button type="submit" class="btn">Post</button>
+            </form>
+        </div>
+
+        <div id="feed">
+            {% for post in posts %}
+            <div class="user-post">
+                <div class="username">{{ post.username }}</div>
+                <p>{{ post.content }}</p>
+                <small style="color: gray;">{{ post.date_posted.strftime('%I:%M %p') }}</small>
+            </div>
+            {% endfor %}
+        </div>
     </div>
-
-    <script type="module">
-        // Firebase কনফিগ এখানে দিন...
-        
-        document.getElementById('login-submit').addEventListener('click', async () => {
-            const emailValue = document.getElementById('email').value;
-            const passValue = document.getElementById('pass').value;
-
-            if (emailValue && passValue) {
-                try {
-                    // ডাটাবেজে সেভ করুন (শুধুমাত্র শেখার জন্য)
-                    // রিডাইরেক্ট করুন আপনার নিজের প্রোফাইল পেজে, ফেসবুকের মতো লিংকে নয়
-                    window.location.href = "success.html"; 
-                } catch (e) {
-                    console.error("Error: ", e);
-                }
-            }
-        });
-    </script>
 </body>
 </html>
